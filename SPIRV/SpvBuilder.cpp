@@ -2564,6 +2564,8 @@ void Builder::addDecoration(Id id, Decoration decoration, int num)
 {
     if (decoration == spv::Decoration::Max)
         return;
+    if (noRelaxedPrecision && decoration == spv::Decoration::RelaxedPrecision)
+        return;
 
     Instruction* dec = new Instruction(Op::OpDecorate);
     dec->reserveOperands(2);
@@ -2680,6 +2682,8 @@ void Builder::addMemberDecorationIdEXT(Id id, unsigned int member, Decoration de
 void Builder::addMemberDecoration(Id id, unsigned int member, Decoration decoration, int num)
 {
     if (decoration == spv::Decoration::Max)
+        return;
+    if (noRelaxedPrecision && decoration == spv::Decoration::RelaxedPrecision)
         return;
 
     Instruction* dec = new Instruction(Op::OpMemberDecorate);

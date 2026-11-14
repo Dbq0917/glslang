@@ -56,6 +56,7 @@ struct SpvOptions {
     bool emitNonSemanticShaderDebugSource{ false };
     bool compileOnly{false};
     bool optimizerAllowExpandedIDBound{false};
+    bool noRelaxedPrecision{false};
     // Optional metadata overrides for NonSemantic.Shader.DebugInfo DebugEntryPoint.
     const char* compilerSignature{nullptr};
     const char* commandLineArguments{nullptr};

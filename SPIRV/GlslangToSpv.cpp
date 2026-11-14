@@ -1793,6 +1793,8 @@ TGlslangToSpvTraverser::TGlslangToSpvTraverser(unsigned int spvVersion,
         taskPayloadID(0),
         descHeapLayout(*this)
 {
+    builder.setNoRelaxedPrecision(options.noRelaxedPrecision);
+
     bool isMeshShaderExt = (glslangIntermediate->getRequestedExtensions().find(glslang::E_GL_EXT_mesh_shader) !=
                             glslangIntermediate->getRequestedExtensions().end());
     spv::ExecutionModel executionModel = TranslateExecutionModel(glslangIntermediate->getStage(), isMeshShaderExt);

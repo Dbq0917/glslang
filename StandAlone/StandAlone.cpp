@@ -118,6 +118,7 @@ enum TOptions : uint64_t {
     EOptionRelaxSetBindingLimits = (1ull << 37),
     EOptionDiscardIsTerminate = (1ull << 38),
     EOptionOptimizePerformance = (1ull << 39),
+    EOptionNoRelaxedPrecision = (1ull << 40),
 };
 bool targetHlslFunctionality1 = false;
 bool SpvToolsDisassembler = false;
@@ -764,6 +765,8 @@ void ProcessArguments(std::vector<std::unique_ptr<glslang::TWorkItem>>& workItem
                     } else if (lowerword == "no-storage-format" || // synonyms
                                lowerword == "nsf") {
                         Options |= EOptionNoStorageFormat;
+                    } else if (lowerword == "no-relaxed-precision") {
+                        Options |= EOptionNoRelaxedPrecision;
                     } else if (lowerword == "preamble-text" ||
                                lowerword == "p") {
                         if (argc > 1)
@@ -1623,6 +1626,7 @@ void CompileAndLinkShaderUnits(std::vector<ShaderCompUnit> compUnits)
                 spvOptions.disableOptimizer = (Options & EOptionOptimizeDisable) != 0;
                 spvOptions.optimizeSize = (Options & EOptionOptimizeSize) != 0;
                 spvOptions.optimizePerformance = (Options & EOptionOptimizePerformance) != 0;
+                spvOptions.noRelaxedPrecision = (Options & EOptionNoRelaxedPrecision) != 0;
                 spvOptions.disassemble = SpvToolsDisassembler;
                 spvOptions.validate = SpvToolsValidate;
                 spvOptions.compileOnly = compileOnly;
@@ -2145,6 +2149,8 @@ void usage()
            "  --no-link                         only compile shader; do not link (GLSL only)\n"
            "                                    NOTE: this option will set the export\n"
            "                                          linkage attribute on all functions\n"
+           "  --no-relaxed-precision            do not emit RelaxedPrecision decorations,\n"
+           "                                    keeping intermediates at full precision\n"
            "  --no-storage-format | --nsf       use Unknown image format\n"
            "  --quiet                           do not print anything to stdout unless\n"
            "                                    requested by another option\n"

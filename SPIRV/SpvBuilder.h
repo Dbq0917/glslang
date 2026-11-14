@@ -398,6 +398,9 @@ public:
         currentFileId = mainFileId;
     }
     void addExtension(const char* ext) { extensions.insert(ext); }
+    // Suppress emission of RelaxedPrecision decorations, keeping intermediates
+    // at full precision regardless of GLSL precision qualifiers.
+    void setNoRelaxedPrecision(bool noRelaxed) { noRelaxedPrecision = noRelaxed; }
     void removeExtension(const char* ext)
     {
         extensions.erase(ext);
@@ -1342,6 +1345,7 @@ protected:
     bool emitNonSemanticShaderDebugInfo = false;
     bool restoreNonSemanticShaderDebugInfo = false;
     bool emitNonSemanticShaderDebugSource = false;
+    bool noRelaxedPrecision = false;
 
     std::set<std::string> extensions;
     std::vector<const char*> sourceExtensions;
